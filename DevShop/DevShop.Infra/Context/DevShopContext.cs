@@ -41,7 +41,7 @@ namespace DevShop.Infraestructure.Context
                         .FormatSql())
                 .Mappings(x =>
                     x.FluentMappings.AddFromAssemblyOf<DesenvolvedorMap>())
-                .ExposeConfiguration(x => new SchemaExport(x).Create(true, true))
+                //.ExposeConfiguration(x => new SchemaExport(x).Create(true, true))
                 .BuildSessionFactory();
         }
 

@@ -6,11 +6,32 @@ using DevShop.Infraestructure.Context;
 using DevShop.Resourse;
 using System.Linq;
 using NHibernate.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DevShop.Infraestructure.Repositories
 {
     public class DesenvolvedorRepository : IDesenvolvedorRepository
     {
+        public List<Desenvolvedor> Buscar()
+        {
+            List<Desenvolvedor> retorno = null;
+
+            using (ISession session = DevShopContext.AbrirSessao())
+            {
+                try
+                {
+                    retorno = session.Query<Desenvolvedor>().ToList();
+                }
+                catch (Exception ex)
+                {
+                    TratarException.Exception(ex);
+                }
+            }
+
+            return retorno;
+        }
+
         public Desenvolvedor Obter(string usuario)
         {
             Desenvolvedor retorno = null;
@@ -26,7 +47,7 @@ namespace DevShop.Infraestructure.Repositories
                 }
                 catch (Exception ex)
                 {
-                    TratarException.NHibernateException(ex);
+                    TratarException.Exception(ex);
                 }
             }
 

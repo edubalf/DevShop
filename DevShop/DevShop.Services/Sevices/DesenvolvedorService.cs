@@ -3,51 +3,67 @@ using System;
 using DevShop.Domain.Models;
 using DevShop.Infraestructure.Repositories;
 using DevShop.Services.Externo;
+using DevShop.Domain.Contracts.Repositories;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DevShop.Services.Sevices
 {
     public class DesenvolvedorService : IDesenvolvedorService
     {
-        private readonly DesenvolvedorRepository desenvolvedorRepository = new DesenvolvedorRepository();
+        private DesenvolvedorRepository _repository = new DesenvolvedorRepository();
+
         private readonly GitHub gitHub = new GitHub();
+
+        public List<Desenvolvedor> Buscar()
+        {
+            return _repository.Buscar();
+        }
 
         public Desenvolvedor Obter(string usuarioGitHub)
         {
-            var desenvolvedor = desenvolvedorRepository.Obter(usuarioGitHub);
+            var desenvolvedor = _repository.Obter(usuarioGitHub);
 
             desenvolvedor.IncluirUsuarioGitHub(gitHub.ObterUsuario(desenvolvedor.Usuario));
 
             return desenvolvedor;
         }
 
-        public Desenvolvedor Incluir(Desenvolvedor desenvolvedor)
+        public Desenvolvedor Incluir(string usuarioGitHub, decimal precoHora)
         {
-            if (gitHub.ObterUsuario(desenvolvedor.Usuario) != null)
+            var dev = new Desenvolvedor(usuarioGitHub, precoHora);
+
+            if (gitHub.ObterUsuario(dev.Usuario) != null)
             {
-                desenvolvedorRepository.Incluir(desenvolvedor);
+                _repository.Incluir(dev);
             }
             else
             {
-                desenvolvedor.Mensagens.Add("O usuário não possui GitHub");
+                dev.Mensagens.Add("O usuário não possui GitHub");
             }
 
-            return desenvolvedor;
+            return dev;
         }
 
-        public void Atualizar(Desenvolvedor desenvolvedor)
+        public void Atualizar(string usuarioGitHub, decimal precoHora)
         {
-            desenvolvedorRepository.Atualizar(desenvolvedor);
+            var dev = _repository.Obter(usuarioGitHub);
+
+            dev.AlterarPreco(precoHora);
+
+            _repository.Atualizar(dev);
         }
 
-        public void Remover(Desenvolvedor desenvolvedor)
+        public void Remover(string usuarioGitHub)
         {
-            desenvolvedorRepository.Remover(desenvolvedor);
+            var dev = _repository.Obter(usuarioGitHub);
+
+            _repository.Remover(dev);
         }
 
         public void Dispose()
         {
-            desenvolvedorRepository.Dispose();
-            this.Dispose();
+            _repository.Dispose();
         }
     }
 }

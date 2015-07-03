@@ -15,7 +15,7 @@ namespace DevShop.Resourse
             throw ex;
         }
 
-        public static void NHibernateException(Exception ex)
+        public static void Exception(Exception ex)
         {
             throw ex;
         }

@@ -9,6 +9,8 @@ namespace DevShop.Domain.Contracts.Repositories
 {
     public interface IDesenvolvedorRepository : IDisposable
     {
+        List<Desenvolvedor> Buscar();
+
         Desenvolvedor Obter(string usuarioGitHub);
 
         void Incluir(Desenvolvedor desenvolvedor);

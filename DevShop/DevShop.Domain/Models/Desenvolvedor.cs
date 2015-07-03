@@ -7,10 +7,10 @@ namespace DevShop.Domain.Models
     {
         #region Properties
 
-        public virtual Guid CodDesenvolvedor { get; protected set; }
-        public virtual string Usuario { get; protected set; }
-        public virtual decimal PrecoHora { get; protected set; }
-        public UsuarioGitHub UsuarioGitHub { get; protected set; }
+        public virtual Guid CodDesenvolvedor { get; set; }
+        public virtual string Usuario { get; set; }
+        public virtual decimal PrecoHora { get; set; }
+        public UsuarioGitHub UsuarioGitHub { get; set; }
 
         #endregion
 

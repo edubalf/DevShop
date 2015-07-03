@@ -11,10 +11,12 @@ namespace DevShop.Domain.Contracts.Services
     {
         Desenvolvedor Obter(string usuarioGitHub);
 
-        Desenvolvedor Incluir(Desenvolvedor desenvolvedor);
+        List<Desenvolvedor> Buscar();
 
-        void Atualizar(Desenvolvedor desenvolvedor);
+        Desenvolvedor Incluir(string usuarioGitHub, decimal precoHora);
 
-        void Remover(Desenvolvedor desenvolvedor);
+        void Atualizar(string usuarioGitHub, decimal precoHora);
+
+        void Remover(string usuarioGitHub);
     }
 }
